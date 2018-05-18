@@ -1,0 +1,43 @@
+<div id="portfolio">
+
+  <div class="title-section">
+    <div>Portfolio</div>
+  </div>
+
+  <div *ngFor="let p of listPortfolios | visiblepipe:true">
+    <div class="row">
+      <div *ngFor="let img of p.images | visiblepipe:true | mainpipe:true" class="col-md-7 img-main">
+        <img (click)="open(content,p.id)" class="img-fluid rounded mb-3 mb-md-0" [src]=img.source [alt]=img.label>
+      </div>
+      <div class="col-md-5">
+        <h3>{{p.title}}</h3>
+        <p [innerHTML]=p.description></p>
+        <a *ngIf="p?.url" class="btn btn-primary" href="#">View Project</a>
+      </div>
+    </div>
+    <!-- /.row -->
+    <hr>
+
+  </div>
+
+  <ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header">
+      <h4 class="modal-title">{{titleProject}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <ngb-carousel>
+        <ng-template *ngFor="let img of listImgs | visiblepipe:true" ngbSlide>
+          <img [src]="img.source" [alt]=img.label>
+          <div class="carousel-caption">
+            <h3>{{img.label}}</h3>
+            <p [innerHTML]=img.description></p>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+  </ng-template>
+
+</div>
